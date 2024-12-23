@@ -1,14 +1,15 @@
-FROM ubuntu:latest
+FROM python:3.9-slim
 
-# Gerekli paketleri yükleyin
+# Set environment variables to prevent Python from writing .pyc files and buffering stdout/stderr
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     unixodbc \
     unixodbc-dev \
     gnupg \
-    python3 \
-    python3-pip \
     && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update \
@@ -16,14 +17,14 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Çalışma dizinini ayarlayın
+# Set working directory
 WORKDIR /app
 
-# Uygulama dosyalarını kopyalayın
-COPY . /app
+# Install Python dependencies
+COPY requirements.txt /app/requirements.txt
+# RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install  -r requirements.txt
 
-# Python bağımlılıklarını yükleyin
-RUN pip3 install mlflow==2.17.2
 
 # Portu açın
 EXPOSE 5000
