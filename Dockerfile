@@ -1,3 +1,5 @@
+FROM ubuntu:latest
+
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
@@ -20,7 +22,7 @@ RUN pip install mlflow==2.17.2
 EXPOSE 5000
 
 CMD ["mlflow", "server", \
-    "--backend-store-uri", "--secret $salary-project-bsu", \
-    "--default-artifact-root", "--secret $salary-project-dar", \
-     "--host", "0.0.0.0", \
-     "--port", "5000"]
+    "--backend-store-uri", "$salary-project-bsu", \
+    "--default-artifact-root", "$salary-project-dar", \
+    "--host", "0.0.0.0", \
+    "--port", "5000"]
