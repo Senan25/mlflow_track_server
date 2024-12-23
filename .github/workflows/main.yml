@@ -1,0 +1,27 @@
+name: Flow of pipeline
+
+on:
+    push:
+        branches: "main"
+
+jobs:
+    build-deploy:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - name: Logging to DockerHub
+              run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+
+            - name: Building and Pushing image to DockerHub
+              run: |
+                docker build -t sanan25/mlflow-track-server:latest .
+            - name: Checking image
+              run: |
+                docker images -a
+
+            - name: Deploying
+              run: |
+                docker push sanan25/mlflow-track-server:latest
