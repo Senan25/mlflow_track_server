@@ -31,7 +31,7 @@ EXPOSE 5000
 
 # mlflow server'ı başlatın
 CMD ["mlflow", "server", \
-    "--backend-store-uri", "$salary_project_bsu", \
-    "--default-artifact-root", "$salary_project_dar", \
+    "--backend-store-uri", "$salaryprojectbsu", \
+    "--default-artifact-root", "$salaryprojectdar", \
     "--host", "0.0.0.0", \
     "--port", "5000"]
