@@ -29,6 +29,9 @@ RUN pip install  -r requirements.txt
 # Portu açın
 EXPOSE 5000
 
+echo $salaryprojectbsu
+echo $salaryprojectdar
+
 # mlflow server'ı başlatın
 CMD ["mlflow", "server", \
     "--backend-store-uri", "$salaryprojectbsu", \
