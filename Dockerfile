@@ -30,8 +30,11 @@ RUN pip install  -r requirements.txt
 EXPOSE 5000
 
 
-CMD mlflow server \
+CMD echo "Backend Store URI: $salaryprojectbsu" && \
+    echo "Default Artifact Root: $salaryprojectdar" && \
+    mlflow server \
     --backend-store-uri "$salaryprojectbsu" \
     --default-artifact-root "$salaryprojectdar" \
     --host 0.0.0.0 \
     --port 5000
+
