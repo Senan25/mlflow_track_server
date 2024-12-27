@@ -27,7 +27,7 @@ RUN pip install  -r requirements.txt
 
 
 # Portu açın
-EXPOSE 5000
+EXPOSE 80
 
 
 CMD echo "Backend Store URI: $salaryprojectbsu" && \
@@ -36,5 +36,5 @@ CMD echo "Backend Store URI: $salaryprojectbsu" && \
     --backend-store-uri "$salaryprojectbsu" \
     --default-artifact-root "$salaryprojectdar" \
     --host 0.0.0.0 \
-    --port 5000
+    --port 80
 
