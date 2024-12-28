@@ -4,6 +4,7 @@ FROM python:3.9-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
@@ -17,23 +18,24 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Set ODBC environment variables
+ENV ODBCINI=/etc/odbc.ini
+ENV ODBCSYSINI=/etc
+
 # Set working directory
 WORKDIR /app
 
 # Install Python dependencies
 COPY requirements.txt /app/requirements.txt
-# RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install  -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-
-# Portu açın
+# Expose port
 EXPOSE 5000
 
-
+# Command to run MLflow server
 CMD ["mlflow", "server", \
     "--backend-store-uri", "mssql+pyodbc://azurevmsenan25:Azurevmpass25@mlflow-sql-server-senan.database.windows.net:1433/mlflow_db?driver=ODBC+Driver+18+for+SQL+Server", \
     "--default-artifact-root", "wasbs://models@mystorageazure25.blob.core.windows.net/models", \
-     "--host", "0.0.0.0", \
-     "--port", "5000", \
-     "--debug"]
-
+    "--host", "0.0.0.0", \
+    "--port", "5000", \
+    "--debug"]
