@@ -35,7 +35,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # SQL Server connection test command
-RUN sqlcmd -S mlflow-sql-server-senan.database.windows.net -U azurevmsenan25 -P Azurevmpass25 -d mlflow_db -Q "SELECT * FROM INFORMATION_SCHEMA.TABLES" || echo "SQL Server connection failed"
+CMD sqlcmd -S mlflow-sql-server-senan.database.windows.net -U azurevmsenan25 -P Azurevmpass25 -d mlflow_db -Q "SELECT * FROM INFORMATION_SCHEMA.TABLES" || echo "SQL Server connection failed"
 
 # Command to run MLflow server
 CMD ["mlflow", "server", \
