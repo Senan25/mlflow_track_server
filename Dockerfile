@@ -34,6 +34,6 @@ CMD ["mlflow", "server", \
     "--backend-store-uri", "mssql+pyodbc://azurevmsenan25:Azurevmpass25@mlflow-sql-server-senan.database.windows.net:1433/mlflow_db?driver=ODBC+Driver+18+for+SQL+Server", \
     "--default-artifact-root", "wasbs://models@mystorageazure25.blob.core.windows.net/models", \
      "--host", "0.0.0.0", \
-     "--port", "5000",
+     "--port", "5000", \
      "--debug"]
 
