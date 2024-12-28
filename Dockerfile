@@ -18,6 +18,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install sqlcmd for SQL Server connection testing
+RUN ACCEPT_EULA=Y apt-get install -y mssql-tools \
+    && echo 'export PATH="/opt/mssql-tools/bin:$PATH"' >> ~/.bashrc \
+    && /bin/bash -c 'source ~/.bashrc'
+
 # Set ODBC environment variables
 ENV ODBCINI=/etc/odbc.ini
 ENV ODBCSYSINI=/etc
@@ -31,6 +36,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port
 EXPOSE 5000
+
+# SQL Server connection test command
+RUN sqlcmd -S mlflow-sql-server-senan.database.windows.net -U azurevmsenan25 -P Azurevmpass25 -d mlflow_db -Q "SELECT * FROM INFORMATION_SCHEMA.TABLES" || echo "SQL Server connection failed"
 
 # Command to run MLflow server
 CMD ["mlflow", "server", \
